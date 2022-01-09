@@ -19,6 +19,7 @@ public class PropertyUtils {
                     .getResourceAsStream("application.properties"));
             dbProperties = DbProperties.builder()
                     .storageFilePath(properties.getProperty("storage.path"))
+                    .maxConnections(Integer.valueOf(properties.getProperty("storage.max.connections")))
                     .build();
         }
         return dbProperties;

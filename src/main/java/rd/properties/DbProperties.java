@@ -7,4 +7,5 @@ import lombok.Data;
 @Builder
 public class DbProperties {
     private String storageFilePath;
+    private int maxConnections;
 }

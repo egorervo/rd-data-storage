@@ -1,10 +1,10 @@
-package rd.core;
+package rd.server;
 
 import lombok.SneakyThrows;
 import rd.api.StorageClient;
+import rd.util.PropertyUtils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -12,25 +12,35 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class DbServer {
+    public static final int MAX_CONNECTIONS = PropertyUtils.getDbProperties().getMaxConnections();
     private final StorageClient storageClient;
+    private final ExecutorService connectionPool = Executors.newFixedThreadPool(MAX_CONNECTIONS);
 
     public DbServer(StorageClient storageClient) {
         this.storageClient = storageClient;
     }
 
     @SneakyThrows
-    public void startServer() throws IOException {
+    public void startServer() {
         ServerSocket serverSocket = new ServerSocket(6868);
+        for (int i = 0; i < MAX_CONNECTIONS; i++) {
+            connectionPool.submit(() -> {
+                listen(serverSocket);
+            });
+        }
+    }
 
+    @SneakyThrows
+    private void listen(ServerSocket serverSocket) {
         Socket socket = serverSocket.accept();
-
         final InputStream inputStream = socket.getInputStream();
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         final PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
-
         while (true) {
             final String line = bufferedReader.readLine();
             final String[] s = line.split(" ");
@@ -61,7 +71,6 @@ public class DbServer {
             }
             if (null != line) {
                 System.out.println("Line is %s".formatted(line));
-                printWriter.println("This is response for " + line);
             }
         }
     }

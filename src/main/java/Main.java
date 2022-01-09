@@ -1,10 +1,8 @@
 import rd.server.DbServer;
-import rd.storage.RdStorage;
-
-import java.io.IOException;
+import rd.storage.RdStorageFilesStrategy;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        new DbServer(new RdStorage()).startServer();
+    public static void main(String[] args) {
+        new DbServer(new RdStorageFilesStrategy()).startServer();
     }
 }

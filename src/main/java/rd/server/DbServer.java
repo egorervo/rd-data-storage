@@ -66,6 +66,25 @@ public class DbServer {
                     }
                     break;
                 }
+                case "del": {
+                    if (s.length < 2) {
+                        sendIncorrectArgumentsMessage(printWriter);
+                    } else {
+                        this.storageClient.remove(s[1]);
+                        printWriter.println("%s removed.".formatted(s[1]));
+                    }
+                    break;
+                }
+                case "update": {
+                    if (s.length < 3) {
+                        sendIncorrectArgumentsMessage(printWriter);
+                    } else {
+                        final String value = buildString(s, 2);
+                        final boolean result = this.storageClient.edit(s[1], value);
+                        printWriter.println(result ? "updated" : "not updated");
+                    }
+                    break;
+                }
                 default:
                     printWriter.println("Unknown command");
             }

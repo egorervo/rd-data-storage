@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 
-public class RdStorage implements StorageClient {
+public class RdStorageLogStrategy implements StorageClient {
     private static final String DB_FILE_LOG = "rd_db.log";
     private final DbProperties dbProperties = PropertyUtils.getDbProperties();
     final File logFile = new File(dbProperties.getStorageFilePath() + "/" + DB_FILE_LOG);
 
 
-    public RdStorage() {
+    public RdStorageLogStrategy() {
         this.createLogFileIfNotExists();
     }
 

@@ -21,8 +21,8 @@ supported commands
     del ${key}
     update ${key} ${value}
 ```
-example
-![](https://pc.stripocdn.email/content/guids/CABINET_882f5d4fd6a76a42e57671ddef5c4a36/images/myimage2.png)
+
+![example](https://pc.stripocdn.email/content/guids/CABINET_882f5d4fd6a76a42e57671ddef5c4a36/images/myimage2.png)
 #### Properties
 ```properties
     storage.path=./rd-storage-dir   #path where db files will be stored

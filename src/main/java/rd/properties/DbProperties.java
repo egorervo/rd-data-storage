@@ -8,4 +8,5 @@ import lombok.Data;
 public class DbProperties {
     private String storageFilePath;
     private int maxConnections;
+    private int port;
 }

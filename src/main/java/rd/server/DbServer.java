@@ -27,7 +27,7 @@ public class DbServer {
 
     @SneakyThrows
     public void startServer() {
-        ServerSocket serverSocket = new ServerSocket(6868);
+        ServerSocket serverSocket = new ServerSocket(PropertyUtils.getDbProperties().getPort());
         for (int i = 0; i < MAX_CONNECTIONS; i++) {
             connectionPool.submit(() -> {
                 listen(serverSocket);

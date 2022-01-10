@@ -20,6 +20,7 @@ public class PropertyUtils {
             dbProperties = DbProperties.builder()
                     .storageFilePath(properties.getProperty("storage.path"))
                     .maxConnections(Integer.valueOf(properties.getProperty("storage.max.connections")))
+                    .port(Integer.valueOf(properties.getProperty("storage.port")))
                     .build();
         }
         return dbProperties;
